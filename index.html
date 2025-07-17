@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pesca una Carta</title>
+  <title>Draw a Card</title>
   <style>
     body {
       font-family: 'Helvetica Neue', sans-serif;
@@ -11,6 +10,7 @@
       text-align: center;
       padding: 2rem;
       color: #333;
+      margin: 0;
     }
     .hidden { display: none; }
     h1 { color: #c0392b; font-weight: bold; }
@@ -47,33 +47,45 @@
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
     #status { margin-top: 1rem; color: #777; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .button {
+        width: 90%;
+        font-size: 1rem;
+      }
+      .card {
+        font-size: 1.1rem;
+        padding: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
   <div id="modeScreen">
-    <h1>Scegli la Modalità</h1>
+    <h1>Select Mode</h1>
     <button class="button" onclick="selectMode('standard')">Standard</button>
     <button class="button" onclick="selectMode('selflove')">Self Love</button>
     <button class="button" onclick="selectMode('xxx')">XXX</button>
   </div>
 
   <div id="gameScreen" class="hidden">
-    <h1>Pesca una Carta</h1>
+    <h1>Draw a Card</h1>
     <div>
-      <button class="button level" data-level="1">Livello 1</button>
-      <button class="button level" data-level="2">Livello 2</button>
-      <button class="button level" data-level="3">Livello 3</button>
+      <button class="button level" data-level="1">Level 1</button>
+      <button class="button level" data-level="2">Level 2</button>
+      <button class="button level" data-level="3">Level 3</button>
     </div>
-    <button class="button" id="drawCardButton">Pesca prossima carta</button>
+    <button class="button" id="drawCardButton">Draw next card</button>
     <div>
-      <h3>Carta attuale:</h3>
+      <h3>Current Card:</h3>
       <div class="card" id="currentCard">—</div>
     </div>
     <div>
-      <h3>Carta precedente:</h3>
+      <h3>Previous Card:</h3>
       <div class="card" id="previousCard">—</div>
     </div>
-    <div id="status">Scegli una modalità per iniziare.</div>
+    <div id="status">Select a mode to start.</div>
   </div>
 
   <script>
@@ -86,9 +98,8 @@
     let currentLevel = 1;
     let currentMode = "standard";
 
-    // Includi 450 domande qui (per brevità le inseriremo come esempio ridotto)
     const fullQuestions = {
-      standard: {
+	      standard: {
     1: [
       "What's something you're currently curious about?",
       "What kind of first impression do you think you give?",
@@ -555,7 +566,6 @@
   ]
       }
     };
-	
 
     function selectMode(mode) {
       currentMode = mode;
@@ -585,7 +595,7 @@
     function drawCard() {
       const available = allCards[currentLevel];
       if (!available || available.length === 0) {
-        alert("Non ci sono più carte per il livello " + currentLevel);
+        alert("No more cards for level " + currentLevel);
         return;
       }
       const index = Math.floor(Math.random() * available.length);
@@ -600,7 +610,7 @@
     function updateStatus() {
       const remaining = allCards[currentLevel]?.length ?? 0;
       const used = usedCards[currentLevel]?.length ?? 0;
-      document.getElementById('status').textContent = `Modalità: ${currentMode} — Livello ${currentLevel} — Carte rimanenti: ${remaining}, pescate: ${used}`;
+      document.getElementById('status').textContent = `Mode: ${currentMode} — Level ${currentLevel} — Remaining: ${remaining}, Drawn: ${used}`;
     }
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -614,4 +624,3 @@
   </script>
 </body>
 </html>
-
